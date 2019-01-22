@@ -1,80 +1,138 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: https://example.org
 
 # Cosmos API Stake Capital
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+API allowing clients to view state and retrieve data from the network.
 
-## Questions Collection [/questions]
+# GET /status
 
-### List All Questions [GET]
+Get Tendermint status including node info, pubkey, latest block hash, app hash, block height and time.
+
+From Tendermint RPC endpoint:
+```bash
+curl 'localhost:26657/status'
+```
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
+        {
+            "jsonrpc": "2.0",
+            "id": "",
+            "result": {
+            
+            
+                "node_info": {
+                        "protocol_version": {
+                            "p2p": "4",
+                            "block": "7",
+                            "app": "0"
+                        },
+                        "id": "53729852020041b956e86685e24394e0bee4373f",
+                        "listen_addr": "10.0.2.15:26656",
+                        "network": "test-chain-Y1OHx6",
+                        "version": "0.24.0-2ce1abc2",
+                        "channels": "4020212223303800",
+                        "moniker": "ubuntu-xenial",
+                        "other": {
+                            "tx_index": "on",
+                            "rpc_addr": "tcp://0.0.0.0:26657"
+                        }
+                    },
+                    "sync_info": {
+                        "latest_block_hash": "F51538DA498299F4C57AC8162AAFA0254CE08286",
+                        "latest_app_hash": "0000000000000000",
+                        "latest_block_height": "18",
+                        "latest_block_time": "2018-09-17T11:42:19.149920551Z",
+                        "catching_up": false
+                    },
+                    "validator_info": {
+                        "address": "D9F56456D7C5793815D0E9AF07C3A355D0FC64FD",
+                        "pub_key": {
+                            "type": "tendermint/PubKeyEd25519",
+                            "value": "wVxKNtEsJmR4vvh651LrVoRguPs+6yJJ9Bz174gw9DM="
+                        },
+                        "voting_power": "10"
                     }
-                ]
+                }
+            
             }
-        ]
 
-### Create a New Question [POST]
+# GET /net_info
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+Get the height of the latest block.
 
-+ Request (application/json)
+From Tendermint RPC endpoint:
+```bash
+curl 'localhost:26657/net_info'
+```
+
++ Response 200 (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+
+
+            "error": "",
+            "result": {
+                "n_peers": "0",
+                "peers": [],
+                "listeners": [
+                    "Listener(@10.0.2.15:26656)"
+                ],
+                "listening": true
+            },
+            "id": "",
+            "jsonrpc": "2.0"
+        
         }
 
-+ Response 201 (application/json)
+# GET /validators
 
-    + Headers
+Get the validator set at the given block height. If no height is provided, it will fetch the current validator set.
 
-            Location: /questions/2
+From Tendermint RPC endpoint:
+```bash
+curl 'localhost:26657/validators'
+```
++ Response 200 (text/plain)
 
-    + Body
-
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
+        {
+        
+        
+            "error": "",
+            "result": {
+                "validators": [
                     {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
+                        "accum": "0",
+                        "voting_power": "10",
+                        "pub_key": {
+                            "data": "68DFDA7E50F82946E7E8546BED37944A422CD1B831E70DF66BA3B8430593944D",
+                            "type": "ed25519"
+                        },
+                        "address": "E89A51D60F68385E09E716D353373B11F8FACD62"
                     }
-                ]
+                ],
+                "block_height": "5241"
+            },
+            "id": "",
+            "jsonrpc": "2.0"
+        
+        }
+
+# GET /chain_size
+
+Get the size of the blockchain. 
+
+This info will be pushed from the node directly.
+
++ Response 200 (text/plain)
+
+        {
+        
+        
+            "error": "",
+            "result": {
+                "chain_size": "256"
             }
+        
+        }
