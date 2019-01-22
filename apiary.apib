@@ -7,116 +7,30 @@ API allowing clients to view state and retrieve data from the network.
 
 # GET /status
 
-Get Tendermint status including node info, pubkey, latest block hash, app hash, block height and time.
+Get information on the latest block.
 
-From Tendermint RPC endpoint:
-```bash
-curl 'localhost:26657/status'
-```
+From Tendermint RPC endpoint: block
 
 + Response 200 (application/json)
 
         {
-            "jsonrpc": "2.0",
-            "id": "",
-            "result": {
-            
-            
-                "node_info": {
-                        "protocol_version": {
-                            "p2p": "4",
-                            "block": "7",
-                            "app": "0"
-                        },
-                        "id": "53729852020041b956e86685e24394e0bee4373f",
-                        "listen_addr": "10.0.2.15:26656",
-                        "network": "test-chain-Y1OHx6",
-                        "version": "0.24.0-2ce1abc2",
-                        "channels": "4020212223303800",
-                        "moniker": "ubuntu-xenial",
-                        "other": {
-                            "tx_index": "on",
-                            "rpc_addr": "tcp://0.0.0.0:26657"
-                        }
-                    },
-                    "sync_info": {
-                        "latest_block_hash": "F51538DA498299F4C57AC8162AAFA0254CE08286",
-                        "latest_app_hash": "0000000000000000",
-                        "latest_block_height": "18",
-                        "latest_block_time": "2018-09-17T11:42:19.149920551Z",
-                        "catching_up": false
-                    },
-                    "validator_info": {
-                        "address": "D9F56456D7C5793815D0E9AF07C3A355D0FC64FD",
-                        "pub_key": {
-                            "type": "tendermint/PubKeyEd25519",
-                            "value": "wVxKNtEsJmR4vvh651LrVoRguPs+6yJJ9Bz174gw9DM="
-                        },
-                        "voting_power": "10"
-                    }
-                }
-            
-            }
-
-# GET /net_info
-
-Get the height of the latest block.
-
-From Tendermint RPC endpoint:
-```bash
-curl 'localhost:26657/net_info'
-```
-
-+ Response 200 (application/json)
-
-        {
-
-
-            "error": "",
-            "result": {
-                "n_peers": "0",
-                "peers": [],
-                "listeners": [
-                    "Listener(@10.0.2.15:26656)"
-                ],
-                "listening": true
-            },
-            "id": "",
-            "jsonrpc": "2.0"
-        
+          "latest_block_hash": "C3A6C2B4298D6A81A55132AA78AF1D159EE1D276052855B30D77B41837FD24CE",
+          "latest_app_hash": "02E672666712B0B234A4F144F04F52A5E4A5C56FC248A54344084279121D7EE4",
+          "latest_block_height": "224796",
+          "latest_block_time": "2019-01-22T15:02:25.142458104Z"
         }
 
-# GET /validators
+# GET /setup
 
-Get the validator set at the given block height. If no height is provided, it will fetch the current validator set.
+Get network information.
 
-From Tendermint RPC endpoint:
-```bash
-curl 'localhost:26657/validators'
-```
-+ Response 200 (text/plain)
+From Tendermint RPC endpoint net_info
+
++ Response 200 (application/json)
 
         {
-        
-        
-            "error": "",
-            "result": {
-                "validators": [
-                    {
-                        "accum": "0",
-                        "voting_power": "10",
-                        "pub_key": {
-                            "data": "68DFDA7E50F82946E7E8546BED37944A422CD1B831E70DF66BA3B8430593944D",
-                            "type": "ed25519"
-                        },
-                        "address": "E89A51D60F68385E09E716D353373B11F8FACD62"
-                    }
-                ],
-                "block_height": "5241"
-            },
-            "id": "",
-            "jsonrpc": "2.0"
-        
+          "network": "game_of_stakes_3",
+          "version": "0.27.3"
         }
 
 # GET /chain_size
