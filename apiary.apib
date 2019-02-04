@@ -1,80 +1,46 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: cosmos.stake.capital/api
 
 # Cosmos API Stake Capital
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+API allowing clients to view Cosmos' state and retrieve data from the network.
 
-## Questions Collection [/questions]
+# GET /status
 
-### List All Questions [GET]
+Get information on the latest block.
+
+From Tendermint RPC endpoint: block
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
-
-+ Request (application/json)
-
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+          "latest_block_hash": "C3A6C2B4298D6A81A55132AA78AF1D159EE1D276052855B30D77B41837FD24CE",
+          "latest_app_hash": "02E672666712B0B234A4F144F04F52A5E4A5C56FC248A54344084279121D7EE4",
+          "latest_block_height": "224796",
+          "latest_block_time": "2019-01-22T15:02:25.142458104Z"
         }
 
-+ Response 201 (application/json)
+# GET /setup
 
-    + Headers
+Get network information.
 
-            Location: /questions/2
+From Tendermint RPC endpoint net_info
 
-    + Body
++ Response 200 (application/json)
 
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
+        {
+          "network": "game_of_stakes_3",
+          "version": "0.27.3"
+        }
+
+# GET /chain_size
+
+Get the size of the blockchain in Kbytes. 
+
+This info will be pushed from the node directly.
+
++ Response 200 (application/json)
+
+        {
+          "chain_size": "256"
+        }
