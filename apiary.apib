@@ -44,3 +44,27 @@ This info will be pushed from the node directly.
         {
           "chain_size": "256"
         }
+
+# GET /yearly_return
+
+Extends the block reward to a yearly compound return e.g. profits are reinvested.
+
+This info will be pushed from the node directly.
+
++ Response 200 (application/json)
+
+        {
+          "y_return": "10"
+        }
+
+# GET /average_reward
+
+Get the average reward per block (in %) including both inflation and transaction fees, based on the last 30 days. 
+
+This info will be pushed from the node directly.
+
++ Response 200 (application/json)
+
+        {
+          "av_reward": "2"
+        }
